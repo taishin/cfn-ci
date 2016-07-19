@@ -21,4 +21,4 @@ test:
   override:
     - bundle exec rake spec
   post:
-    - aws cloudformation delete-stack --stack-name ${AWS_CF_STACK_NAME}
+    # - aws cloudformation delete-stack --stack-name ${AWS_CF_STACK_NAME}
