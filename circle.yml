@@ -1,5 +1,8 @@
 machine:
   timezone: Asia/Tokyo
+  ruby:
+    version:
+      2.1.2
   environment:
     AWS_AMI_ID: ami-6154bb00
     AWS_INSTANCE_TYPE: t2.micro
