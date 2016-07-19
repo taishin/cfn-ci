@@ -15,7 +15,8 @@ test:
   pre:
     - aws cloudformation create-stack --stack-name ${AWS_CF_STACK_NAME} --template-body file://template.cform --parameters ParameterKey=KeyName,ParameterValue=$AWS_KEY_NAME ParameterKey=ImageId,ParameterValue=$AWS_AMI_ID ParameterKey=InstanceType,ParameterValue=$AWS_INSTANCE_TYPE
     - aws cloudformation wait stack-create-complete --stack-name ${AWS_CF_STACK_NAME}
-    - sed -e 's/####KEYNAME####/sasaki-20160511/g' -e 's/####IMAGEID####/ami-6154bb00/g' -e 's/####INSTANCETYPE####/t2.micro/g' spec/ec2_spec.rb-template > spec/ec2_spec.rb
+    - aws cloudformation describe-stacks --stack-name ${AWS_CF_STACK_NAME}-deploy | jq -r '.Stacks[].Outputs[] | select(.OutputKey == "InstanceId") | .OutputValue' > /tmp/instanceid.txt
+    - sed -e "s/####INSTANCEID####/`cat /tmp/instanceid.txt`/g" -e "s/####KEYNAME####/$AWS_KEY_NAME/g" -e "s/####IMAGEID####/$AWS_AMI_ID/g" -e "s/####INSTANCETYPE####/$AWS_INSTANCE_TYPE/g" spec/ec2_spec.rb-template > spec/ec2_spec.rb
     
   override:
     - bundle exec rake spec
