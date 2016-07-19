@@ -10,5 +10,4 @@ describe ec2('####INSTANCEID####') do
   it { should have_security_group('CFn-CI-SG-Base') }
   it { should belong_to_vpc('CFn-CI-VPC') }
   it { should belong_to_subnet('CFn-CI-Subnet1A') }
-  it { should have_ebs('vol-dbc78f25') }
 end
