@@ -1,0 +1,14 @@
+require 'spec_helper'
+describe ec2('CFn-CI-Instance') do
+  it { should exist }
+  it { should be_running }
+  its(:image_id) { should eq '####IMAGEID####' }
+  its(:instance_type) { should eq '####INSTANCETYPE####' }
+  its(:public_ip_address) { should match "^\\d{1,3}\.\\d{1,3}\.\\d{1,3}\.\\d{1,3}$" }
+  its(:key_name) { should eq '####KEYNAME####' }
+  it { should have_security_group('CFn-CI-SG-HTTP') }
+  it { should have_security_group('CFn-CI-SG-Base') }
+  it { should belong_to_vpc('CFn-CI-VPC') }
+  it { should belong_to_subnet('CFn-CI-Subnet1A') }
+  it { should have_ebs('vol-dbc78f25') }
+end

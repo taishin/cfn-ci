@@ -1,0 +1,2 @@
+gem 'awspec'
+gem 'rake'
